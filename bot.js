@@ -36,12 +36,14 @@ var ti={}
 
 
 
+const Canvas = require("canvas");
+let profile = JSON.parse(fs.readFileSync("profile.json", "utf8"))
 client.on("message", message => {
  
   if (message.author.bot) return;
   if(!message.channel.guild)return;
   if (!profile[message.author.id]) profile[message.author.id] = {
-    tite: 'Super User',
+    tite: 'dj User',
     rep: 0,
     reps: 'NOT YET',
     lastDaily:'Not Collected',
@@ -106,7 +108,6 @@ if(message.content.startsWith(prefix + "daily")) {
     message.channel.send(`**:stopwatch: | ${message.author.username}, your daily :yen: credits refreshes ${moment().endOf('day').fromNow()}**`)
 }
   }
-
  
  let cont = message.content.slice(prefix.length).split(" ");
 let args = cont.slice(1);
@@ -141,23 +142,6 @@ message.channel.send(`**:moneybag: | ${message.author.username}, has transferrer
 }
  
       });
- 
-      client.on('message', message => {
-          if(!profile[message.author.id]) profile[message.author.id] ={
-              points: 0,
-              level: 1
-          };
-          if(message.author.bot) return;
-          profile[message.author.id].points = Math.floor(profile[message.author.id].points+1);
-          if(profile[message.author.id].points > 100) {
-              profile[message.author.id].points = 0
-              profile[message.author.id].level = Math.floor(profile[message.author.id].level+1);
-              message.channel.send(`**${message.author.username}, You leveld up to __${profile[message.author.id].level}__**`)
-          }
-          fs.writeFile('profile.json', JSON.stringify(profile), (err) => {
-if (err) console.error(err);
-})
-      })//Êã ÇÎÐ ßæÏ ãä ÞÈá Dramex ÕÇÍÈ Probot ÚÔÇä íÔÊÛá ßæÏ áÇÒã ÊÍØ ãáÝ profile.json
 
 
 client.login(process.env.BOT_TOKEN)
